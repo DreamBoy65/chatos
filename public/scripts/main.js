@@ -6,7 +6,6 @@ class Utopia {
   constructor() {
     this.init()
     this.api = new Api()
-    console.log(...localStorage)
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       alert("Please access this website from a mobile device to get the best user experience.");
     }
