@@ -2,7 +2,14 @@ class Footer {
   constructor() {
     window.Cur = "home"
     dr.select("#home").addClass("footer-active")
-    dr.select(".profile-1").css({ backgroundImage: "url(https://cdn.discordapp.com/avatars/813299347819069520/b835800881dbfe33f869dd6392dd6794.webp?size=4096)" })
+    this.setPfp()
+  }
+
+  async setPfp() {
+    let data = await db.getData()
+    dr.select(".profile-1").css({
+      backgroundImage: `url(${data.data.pfp})`
+    })
   }
 
   handle() {
@@ -12,7 +19,7 @@ class Footer {
 
   toggle() {
     let el = dr.select(".footer-1").el
-    el.forEach(e => e != this ? e.classList.remove("footer-active") : null)
+    el.forEach(e => e != this ? e.classList.remove("footer-active"): null)
 
     if (this.classList != "footer-active") {
       this.classList.add("footer-active")

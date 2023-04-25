@@ -2,6 +2,15 @@ class postHandler {
   constructor() {
     this.imgs = []
     this.maxSize = 1200
+    this.pfp()
+  }
+
+  async pfp() {
+    let data = await db.getData()
+    console.log(data)
+    dr.select(".c1-3").css({
+      backgroundImage: `url(${data.data.pfp})`
+    })
   }
 
   handle() {
@@ -29,15 +38,17 @@ class postHandler {
       if (this.scrollHeight > 250) return;
       this.style.height = 0;
       this.style.height = (this.scrollHeight) + "px";
-    }).on("input", () => this.progress())
+    }).on("input",
+      () => this.progress())
   }
 
   handleCicle() {
-    this.bar = new ProgressBar.Circle("#c1-prog", {
-      color: 'blue',
-      strokeWidth: 10,
-      easing: 'easeInOut'
-    })
+    this.bar = new ProgressBar.Circle("#c1-prog",
+      {
+        color: 'blue',
+        strokeWidth: 10,
+        easing: 'easeInOut'
+      })
   }
 
   progress() {
@@ -83,29 +94,30 @@ class postHandler {
   }
 
   handleImage() {
-    $(".c1-66 > input").on("change", () => {
-      let files = $(".c1-66 > input").prop("files")
-      if (this.imgs.length + files.length > 10) return window.dram.alert("Max Image Limit is 10")
+    $(".c1-66 > input").on("change",
+      () => {
+        let files = $(".c1-66 > input").prop("files")
+        if (this.imgs.length + files.length > 10) return window.dram.alert("Max Image Limit is 10")
 
-      Object.keys(files).forEach(i => {
-        if (this.imgs.length > 10) return;
+        Object.keys(files).forEach(i => {
+          if (this.imgs.length > 10) return;
 
-        let url = URL.createObjectURL(files[i])
-        let id = url.split("localhost")[1].split("/")[1]
+          let url = URL.createObjectURL(files[i])
+          let id = url.split("localhost")[1].split("/")[1]
 
-        this.imgs.push({
-          url: url,
-          id: id
-        })
+          this.imgs.push({
+            url: url,
+            id: id
+          })
 
-        dr.select(".c1-5").append(`<div id="${id}"><i class="fas fa-skull-crossbones"></i></div><img src="${url}">`).classed("c1-55").id(id + "-1")
+          dr.select(".c1-5").append(`<div id="${id}"><i class="fas fa-skull-crossbones"></i></div><img src="${url}">`).classed("c1-55").id(id + "-1")
 
-        $(`#${id}`).click((e) => {
-          let id = e.target.id
-          this.imgs = this.imgs.filter(c => c.id !== id)
-          $(`#${id}-1`).remove()
+          $(`#${id}`).click((e) => {
+            let id = e.target.id
+            this.imgs = this.imgs.filter(c => c.id !== id)
+            $(`#${id}-1`).remove()
+          })
         })
       })
-    })
   }
 }

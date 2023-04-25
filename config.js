@@ -1,5 +1,5 @@
 module.exports = {
-  port: 3100,
+  port: 3001,
   name: "chatos",
   mainFile: "mainn",
   

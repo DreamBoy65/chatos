@@ -6,18 +6,22 @@ class Utopia {
   constructor() {
     this.init()
     this.api = new Api()
+    console.log(...localStorage)
+    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      alert("Please access this website from a mobile device to get the best user experience.");
+    }
   }
 
   init() {
-    //this.scrollFront()
+    this.scrollFront()
     this.handleFooter()
     this.handlePosts()
   }
 
   scrollFront(args = {}) {
-    args.times = args.times ? args.times : 1
+    args.times = args.times ? args.times: 1
     let el = dr.select(".c1").functions().getSliderWidth()
-    $(".body").scrollLeft(args.m ? (-(el * args.times)) : (el * args.times))
+    $(".body").scrollLeft(args.m ? (-(el * args.times)): (el * args.times))
   }
 
   handleFooter() {
@@ -27,7 +31,7 @@ class Utopia {
   handlePosts() {
     new postHandler().handle()
   }
-  
+
   alert(msg) {
     alert(msg)
   }
