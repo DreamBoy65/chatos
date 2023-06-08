@@ -1,15 +1,14 @@
 const express = require("express");
 const helmet = require("helmet");
-const bodyParser = require("body-parser");
 const http = require("http");
 const Router = require("./routes/router.js");
 const Logger = require("./console/console.js");
 const Mongoose = require("./db/mongoose.js");
-const cookieParser = require('cookie-parser');
-const {
-  Server
-} = require("socket.io");
-const Socketer = require("./socket/socket.js")
+const cookieParser = require("cookie-parser");
+const { Server } = require("socket.io");
+const Socketer = require("./socket/socket.js");
+
+console.log(process.pid);
 
 // logger
 global.log = new Logger();
@@ -31,13 +30,18 @@ const app = express();
 app.use(cookieParser());
 
 // public dir
-app.use(express.static(process.cwd() + '/public/'));
+app.use(express.static(process.cwd() + "/public/"));
 
+/*
 // body-parser
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(bodyParser.json());
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
+app.use(express.json());
+
+*/
 
 // new server
 const server = http.createServer(app);
@@ -45,13 +49,13 @@ const server = http.createServer(app);
 // new socket
 const io = new Server(server);
 const socketer = new Socketer(io);
-io.on("connection", async(socket) => {
-  global.socket = socket
-  await socketer.loadAll(socket)
+global.io = io
+io.on("connection", async (socket) => {
+  await socketer.loadAll(socket);
 
   io.on("disconnect", () => {
-    io.emit("unjoin")
-  })
+    io.emit("unjoin");
+  });
 });
 
 // router

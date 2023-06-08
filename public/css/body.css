@@ -1,20 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Poppins:wght@500&family=Rubik:wght@300&display=swap');
+
 /* Body */
 :root {
   --b: #000000;
   --w: #FFFFFF;
   --g: #D8334A;
   --primary: #BB86FC;
-  --primary-v: red;
+  --primary-v: #740d0d;
   --bb: red;
+  --ob: #0e1010;
 }
 
-body {
+html, body {
   font-size: 15pt;
-  font-family: monospace;
+  font-family: none;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: var(--b);
+  background: #000000;
   color: white;
   height: 100%;
   width: 100%;
@@ -44,11 +47,59 @@ li {
   list-style: none;
 }
 
+/* color */
+.red {
+  background: #af0000;
+}
+
+.green {
+  background: #21b200;
+}
+
 /* Tool Kit*/
 
 .fas,
-.fa-regular {
+.fa-regular,
+.far {
   color: white;
+}
+
+/* Popper */
+.popper {
+  width: 100%;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid red;
+  background: black;
+  box-shadow: 0 2px 4px red inset;
+  transition: height 0.2s ease;
+  max-height: calc(100% - 50px);
+}
+
+.popper > .popper-1 {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popper > .popper-1 > div {
+  width: 40%;
+  height: 5px;
+  background: #46dcdd;
+  border-radius: 25px;
+}
+
+.popper > .popper-2 {
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
 }
 
 /* main */
@@ -91,6 +142,8 @@ li {
   height: 50px;
   display: flex;
   justify-content: flex-start;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 
 .h-name {
@@ -130,8 +183,11 @@ li {
 .footer {
   width: 100%;
   height: 50px;
-  border-top: 1px solid var(--w);
+  border-top: 1px solid red;
   display: flex;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  box-shadow: 0px -2px 2px red;
 }
 
 .footer-1 {
@@ -177,6 +233,8 @@ li {
   margin-left: 10px;
   margin-top: 10px;
   border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .c1-4 {
@@ -191,6 +249,9 @@ li {
   width: 100%;
   height: auto;
   border: none;
+  border-radius: 25px;
+  background: var(--ob);
+  padding: 10px;
 }
 
 .c1-5 {
@@ -284,4 +345,183 @@ li {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%)
+}
+
+/* toast */
+.toast-container {
+  position: fixed;
+  bottom: 50px;
+  color: white;
+  right: 0;
+}
+
+.toast-container > .toast {
+  position: relative;
+  padding: 5px;
+  color: #fff;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  border: 1px solid white;
+  padding-left: 10px;
+  padding-right: 20px;
+  display: none;
+  right: 10px;
+  font-size: 12pt;
+}
+
+/* post-cards */
+.f1 {
+  display: flex;
+  overflow-x: hidden;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-card:first-child {
+  margin-top: 10px;
+}
+
+.post-card {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-items: center;
+  background: var(--ob);/*#0e1010; #191f20;*/
+  border-radius: 25px;
+}
+
+.post-card-1 {
+  width: 95%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.post-card-1 > img {
+  width: 50px;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.post-card-1 > div {
+  color: white;
+  display: flex;
+  font-size: 12pt;
+  width: 70%;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.post-card-1 > div > span {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.post-card-1 > div .post-time {
+  font-size: 8pt;
+  color: grey;
+}
+
+.post-card-1 .Tdots {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  margin-left: auto;
+}
+
+.post-card-2 {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 5px;
+}
+
+.post-card-2 > div {
+  width: 100%;
+  color: white;
+  font-size: 10pt;
+  word-wrap: break-word;
+}
+
+.post-card-3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 95%;
+  display: flex;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.post-card-3 > div {
+  width: 100%;
+  scroll-snap-align: start;
+  align-items: center;
+  flex-shrink: 0;
+  display: flex;
+  position: relative;
+}
+
+.post-card-3 > div > img {
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
+}
+
+.post-card-3 > div #imgss {
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  color: white;
+  font-size: 10pt;
+  top: 0;
+}
+
+.post-card-5 {
+  width: 95%;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-card-5 > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 12pt;
+}
+
+.post-card-5 > div > span {
+  margin-left: 2px;
+}
+
+/* Animation keyframes */
+@keyframes slideInRight {
+  0% {
+    right: -300px;
+  }
+  100% {
+    right: 20px;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

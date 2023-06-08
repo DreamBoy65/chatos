@@ -4,13 +4,13 @@ class Middleware {
   }
 
   connect(req, res, next) {
-    let obj = {
+    /*   let obj = {
       url: req.url,
       method: req.method,
       time: new Date()
     }
 
-    log.logObj(obj)
+    log.logObj(obj)*/
 
     res.error = function(msg) {
       res.json({

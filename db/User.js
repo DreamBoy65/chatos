@@ -10,10 +10,6 @@ module.exports = mongoose.model("users", new Schema({
     type: String,
     default: null
   },
-  email: {
-    type: String,
-    default: null
-  },
   password: {
     type: String,
     default: null

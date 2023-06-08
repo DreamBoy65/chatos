@@ -10,4 +10,5 @@ module.exports = async function(id) {
   user.socket = this.id
 
   await user.save()
+  console.log("lola")
 }
