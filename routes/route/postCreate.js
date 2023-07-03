@@ -58,6 +58,7 @@ module.exports = async (req, res) => {
     date: Date.now(),
     likes: [],
     id: uuid.v4(),
+    comments: [],
   };
 
   user.posts.push(post);
@@ -65,6 +66,19 @@ module.exports = async (req, res) => {
     user: userId,
     post: post.id,
   });
+
+  for (const f of user.followers) {
+    let us = await Schema.findOne({
+      _id: f,
+    });
+
+    us.fyp.push({
+      user: userId,
+      post: post.id,
+    });
+    
+    await us.save()
+  }
 
   await user.save();
   io.emit("postAdded", post, user);

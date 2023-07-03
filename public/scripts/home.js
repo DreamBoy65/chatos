@@ -13,6 +13,11 @@ class Home {
     await this.handleScroll();
 
     this.dram.io.on("postAdded", async (post, user) => {
+      if (
+        user.id !== this.data.data.id ||
+        !user.fyp.find((c) => c.id === post.id)
+      )
+        return;
       await this.Post(post, user, false);
     });
   }
@@ -33,9 +38,30 @@ class Home {
     await this.nextChunk();
   }
 
-  async handleOpts(id) {
-    $(`#${id}_tdots`).click(async () => {
-      await this.dram.popper("hello");
+  async handleOpts(id, us) {
+    $(`#${id}_tdots`).click(async (e) => {
+      await this.dram.popper(`<div class="post-opts"> 
+      ${
+        us._id === this.data.data._id
+          ? `<div class="post-del hover-1" id="${id}_del"><i class="fas fa-trash"></i> Delete</div>`
+          : ""
+      }
+      </div>`);
+
+      $("#" + id + "_del").click(async (e) => {
+        let id = e.currentTarget.id.split("_")[0];
+
+        let data = await fetch(
+          `/postDelete?userId=${us._id}&postId=${id}`
+        ).then((e) => e.json());
+
+        if (data?.data?.done) {
+          this.dram.alert("Successfully Deleted Post.");
+          $("#" + id).remove();
+        } else {
+          this.dram.alert("Failed to delete")
+        }
+      });
     });
   }
 
@@ -65,7 +91,7 @@ class Home {
         .join("")}`,
       `</div>`,
       `<div class="post-card-5">`,
-      `<div class="like ${post.id}_like"><i class="${
+      `<div class="like ${post.id}_${user._id}_like"><i class="${
         post.likes.find((c) => c === this.dram.id)
           ? "fas fa-heart"
           : "far fa-heart"
@@ -80,8 +106,40 @@ class Home {
       $(".f1").prepend(html);
     }
 
-    await this.handleOpts(post.id);
+    await this.handleLike(post.id, user._id);
+    await this.handleOpts(post.id, user);
     await this.handleScrollImage(post.id);
+  }
+
+  async handleLike(id, uid) {
+    $("." + id + "_" + uid + "_like").click(async (e) => {
+      let pid = e.currentTarget.classList[1].split("_");
+
+      let data = await fetch(
+        `/like?userId=${this.data.data._id}&likedId=${pid[1]}&postId=${pid[0]}`
+      ).then((res) => res.json());
+
+      if (data.error) {
+        this.dram.alert(data.error);
+        return;
+      }
+
+      if (data.data.liked) {
+        $("." + e.currentTarget.classList[1] + "> i").attr(
+          "class",
+          "fas fa-heart"
+        );
+      } else {
+        $("." + e.currentTarget.classList[1] + "> i").attr(
+          "class",
+          "far fa-heart"
+        );
+      }
+
+      $("." + e.currentTarget.classList[1] + "> span").text(
+        data.data.totalLikes
+      );
+    });
   }
 
   async handleScrollImage(id) {
